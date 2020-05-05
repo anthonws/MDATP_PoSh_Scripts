@@ -12,8 +12,8 @@ $TotalBlock = 0
 
 ForEach ($i in $RulesActions){
     If ($RulesActions[$counter] -eq 0){$TotalNotConfigured++}
-    ElseIf ($RulesActions[$counter] -eq 1){$TotalAudit++}
-    ElseIf ($RulesActions[$counter] -eq 2){$TotalBlock++}
+    ElseIf ($RulesActions[$counter] -eq 1){$TotalBlock++}
+    ElseIf ($RulesActions[$counter] -eq 2){$TotalAudit++}
     $counter++
 }
 
@@ -47,8 +47,8 @@ ForEach ($j in $RulesIds){
     ElseIf ($RulesIdsArray[$counter] -eq "e6db77e5-3df2-4cf1-b95a-636979351e5b"){$RuleName = "Block persistence through WMI event subscription"}
     ## Check the Action type
     If ($RulesActions[$counter] -eq 0){$RuleAction = "Disabled"}
-    ElseIf ($RulesActions[$counter] -eq 1){$RuleAction = "Audit"}
-    ElseIf ($RulesActions[$counter] -eq 2){$RuleAction = "Block"}
+    ElseIf ($RulesActions[$counter] -eq 1){$RuleAction = "Block"}
+    ElseIf ($RulesActions[$counter] -eq 2){$RuleAction = "Audit"}
     ## Output Rule Id, Name and Action
     Write-Host "=>" $RulesIdsArray[$counter] " **" $RuleName "**" "Action:"$RuleAction
     $counter++
