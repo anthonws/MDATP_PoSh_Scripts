@@ -49,5 +49,5 @@ Set-Location -Path C:\Windows\Temp\AzCopy\azcopy_windows_amd64*
 
 # Copy generated dump into Azure Storage using a limited SAS
 # It's recommended to minimize the available services and permissions of the SAS Token. Ideally the token should just provide Blob services and Write permissions!!
-# PLEASE MAKE SURE TO REPLACE THE FIELDS WITH YOUR INFO
+# PLEASE MAKE SURE TO REPLACE THE REQUIRED <> FIELDS WITH YOUR OWN AZURE STORAGE INFO
 .\azcopy.exe copy "C:\Windows\Temp\$filename" 'https://<AZURE_STORAGE_NAME>.blob.core.windows.net/<CONTAINER_NAME>?<SAS_TOKEN>'
