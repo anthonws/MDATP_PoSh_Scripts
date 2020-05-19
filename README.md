@@ -4,7 +4,7 @@ Attack Surface Reduction Rules can be set on different ways. If you don't use an
 
 ## Getting Started
 
-Download the Powershell Script or Exe File from here and run it: https://github.com/hemaurer/MDATP_PoSh_Scripts/tree/master/ASR%20GUI
+Just use the Powershell Script (for Development or Enhancement) or the EXE File (for just setting ASR Rules).
 
 ### Prerequisites
 
