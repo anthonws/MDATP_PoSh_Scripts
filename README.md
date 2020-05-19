@@ -31,21 +31,17 @@ There is no installation as the EXE is based on the Powershell Script.
 
 ## Built With
 
-* Visual Studio Designer
+* Visual Studio
 * Powershell ISE 5.0
 
 
 ## Authors
 
-* **Hermann Maurer** - *Initial work*
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+* Hermann Maurer - *Initial work*
 
 ## Acknowledgments
 Thanks to
-* **António Vasconcelos** - [anvascon](https://github.com/anvascon)
+* António Vasconcelos - [anvascon](https://github.com/anvascon)
 * [anthonws](https://github.com/anthonws)
 
 for Inspiration and initial Code base which is used in the "Report"-Function.
