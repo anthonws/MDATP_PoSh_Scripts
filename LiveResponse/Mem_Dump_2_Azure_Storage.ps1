@@ -11,6 +11,7 @@
 ## 16/05/2020 - V3 - Added execution status messages. Added variables for Azure Storage Account information
 ## 17/05/2020 - V4 - Creation of dump independent of connection type.
 ## 23/05/2020 - V5 - Typos fix and other cleanup stuff. Script will now download latest WinpMem release available.
+## 23/05/2020 - V5.1 - Added variables for memory dump splitting - To be used in future
 
 function Write-Status($text) {
     write-host "[*] " -ForegroundColor Green -NoNewline
@@ -22,6 +23,9 @@ function Write-Status($text) {
 $AzStorageName = "STORAGEACCOUNT"  # Example "test" for test.blob.core.windows.net
 $AzContainerName = "CONTAINER" 
 $AzSAStoken = "YOUR SAS TOKEN"
+
+$SplitDump = $False # If $True dump will be split into multiple files
+$SplitChunkSize = 2Gb # Size per memory dump chunk
 
 $DiskOverhead = 1.2. # 20% overhead assumed for disk space calculation.
 
