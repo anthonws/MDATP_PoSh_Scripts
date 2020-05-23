@@ -78,6 +78,7 @@ $DiskOverhead = 1.2 # 20% overhead assumed for disk space calculation.
 # Get current User Principal
 $user = [Security.Principal.WindowsIdentity]::GetCurrent();
 
+# Winpmem Split File
 $SplitDump = $False # If $True dump will be split into multiple files
 $SplitChunkSize = "200m" # Size per memory dump chunk. Written as winpmem requires
 
@@ -135,8 +136,8 @@ else {
     Write-Sub-Status "Connection is not Metered. Dump will be uploaded to Azure."
     }
     
-# Check if diskspace is Available
-Write-Status "Checking for Memory & Available Disk Space..."
+# Check if required disk space is available
+Write-Status "Checking for Available Disk Space..."
 $Memsize=(Get-WmiObject win32_physicalmemory).capacity -as [long]
 $DiskFree=(Get-WmiObject win32_logicaldisk -Filter "DeviceID='C:'").freespace -as [long]
 
