@@ -11,7 +11,7 @@
 ## 16/05/2020 - V3 - Added execution status messages. Added variables for Azure Storage Account information
 ## 17/05/2020 - V4 - Creation of dump independent of connection type.
 ## 23/05/2020 - V5 - Typos fix and other cleanup stuff. Script will now download latest WinpMem release available.
-## 23/05/2020 - V5.1 - Added variables for memory dump splitting - To be used in future
+## 23/05/2020 - V6 - Added File Split support via winpmem --split option
 
 function Write-Status($text) {
     write-host "[*] " -ForegroundColor Green -NoNewline
@@ -25,7 +25,7 @@ $AzContainerName = "CONTAINER"
 $AzSAStoken = "YOUR SAS TOKEN"
 
 $SplitDump = $False # If $True dump will be split into multiple files
-$SplitChunkSize = 2Gb # Size per memory dump chunk
+$SplitChunkSize = "200m" # Size per memory dump chunk. Written as winpmem requires
 
 $DiskOverhead = 1.2. # 20% overhead assumed for disk space calculation.
 
@@ -78,8 +78,15 @@ Invoke-WebRequest $download -OutFile winpmem.exe
 # Dump Device Memory
 # Please note that this will fail in virtual machines that use dynamic memory
 
-Write-Status "Dumping memory..."
-.\winpmem.exe -o "C:\Windows\Temp\$filename"
+if ($SplitDump == False) {
+    Write-Status "Dumping memory..."
+    .\winpmem.exe -o "C:\Windows\Temp\$filename" -c zlib
+    }
+else {
+    Write-Status "Dumping memory in $SplitChunkSize byte chunks"
+    .\winpmem.exe -o "C:\Windows\Temp\$filename" --split $SplitChunkSize" -c zlib
+    }
+    
 
 # Install AzCopy into remote device
 write-status "Downloading AzCopy ..."
@@ -95,7 +102,7 @@ Set-Location -Path C:\Windows\Temp\AzCopy\azcopy_windows_amd64*
 # Copy generated dump into Azure Storage using a limited SAS
 if ($isMetered -eq $False) {
     Write-Status "Copying memory dump to your Azure Storage container " $AzContainerName
-    .\azcopy.exe copy "C:\Windows\Temp\$filename" $AzureURI 2>&1 
+    .\azcopy.exe copy "C:\Windows\Temp\$filename*" $AzureURI 2>&1 
     }
 else {
     Write-Host "[!] Dump was succssefully created but not uploaded. Metered connection detected." -ForegroundColor Yellow
