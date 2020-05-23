@@ -41,10 +41,10 @@ $connection = [Windows.Networking.Connectivity.NetworkInformation]::GetInternetC
 $isMetered = $Connection.ApproachingDataLimit -or $cost.OverDataLimit -or $cost.Roaming -or $cost.BackgroundDataUsageRestricted -or ($cost.NetworkCostType -ne "Unrestricted")
 
 if ($isMetered -eq $True) {
-    Write-Status ("[!] Connection is Metered. Dump will not be uploaded") -ForegroundColor Red   
+    Write-Status ("[!] Connection is Metered. Dump will NOT be uploaded.") -ForegroundColor Red   
     }
 else {
-    Write-Status "Connection is not metered. Dump will be uploaded to Azure"
+    Write-Status "Connection is not Metered. Dump will be uploaded to Azure."
     }
     
 # Check if diskspace is Available
@@ -59,7 +59,7 @@ if ($Diskfree -le $Memsize * $DiskOverhead) {
 
 # Get Winpmem binaries
 
-Write-Status "Downloading Memory Dumping tool..."
+Write-Status "Downloading Memory dumping tool..."
 
 $repo = "Velocidex/c-aff4"
 $file = "winpmem_"
@@ -90,7 +90,7 @@ Set-Location -Path C:\Windows\Temp\AzCopy\azcopy_windows_amd64*
 
 # Copy generated dump into Azure Storage using a limited SAS
 if ($isMetered -eq $False) {
-    write-status "Copying memory dump to your Azure Storage container " $AzContainerName
+    Write-Status "Copying memory dump to your Azure Storage container " $AzContainerName
     .\azcopy.exe copy "C:\Windows\Temp\$filename" $AzureURI 2>&1 
     }
 else {
