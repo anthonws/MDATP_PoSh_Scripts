@@ -117,10 +117,10 @@ Function AzureInfo {
         AzureInfo
     }
     else{
-        #continue
+        # Azure Blob Storage Dynamic URI
+        $AzureURI = "https://"+$AzStorageName+".blob.core.windows.net/"+$AzContainerName+"?" + $AzSAStoken # DO NOT TOUCH THIS LINE
+        return $AzureURI
     }
-    # Azure Blob Storage Dynamic URI
-    $AzureURI = "https://"+$AzStorageName+".blob.core.windows.net/"+$AzContainerName+"?" + $AzSAStoken # DO NOT TOUCH THIS LINE
     } #end function
 }
 
