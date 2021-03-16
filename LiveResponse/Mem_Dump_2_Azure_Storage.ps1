@@ -34,7 +34,10 @@
 ##
 ## 16/03/2021 - V8
 ## - Now for realz, fixing metered connection check.
-
+##
+## 16/03/2021 - V9
+## - New version of WinPMem (fixes VSM issues)
+## - Changed code to get latest release from new GitHub repo and check for download_url instead of tag
 
 # Custom format for logging messages
 function Write-Status($text) {
@@ -140,15 +143,15 @@ if ($Diskfree -le $Memsize * $DiskOverhead) {
 # Get Winpmem binaries
 Write-Status "Downloading Memory dumping tool..."
 
-$repo = "Velocidex/c-aff4"
-$file = "winpmem_"
+$repo = "Velocidex/WinPmem"
+$filenamePattern = "*x64*.exe"
 $releases = "https://api.github.com/repos/$repo/releases"
 
-Write-Status "Determining latest release"
-$tag = (Invoke-WebRequest $releases | ConvertFrom-Json)[0].tag_name
-$download = "https://github.com/$repo/releases/download/$tag/$file$tag.exe"
+$releasesUri = "https://api.github.com/repos/$repo/releases/latest"
+$downloadUri = ((Invoke-RestMethod -Method GET -Uri $releasesUri).assets | Where-Object name -like $filenamePattern ).browser_download_url
 
-Invoke-WebRequest $download -OutFile winpmem.exe
+Invoke-WebRequest $downloadUri -OutFile winpmem.exe
+
 # Dump Device Memory
 # Please note that this will fail in virtual machines that use dynamic memory
 
