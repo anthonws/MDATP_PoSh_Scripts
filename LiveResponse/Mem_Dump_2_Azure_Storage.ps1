@@ -81,7 +81,7 @@ function Write-Sub-Warning($text) {
 ## Global variables ##
 
 # Dynamic DMP filename, based on Hostname and Date and Time
-$filename = "$($env:COMPUTERNAME)_$(get-date -Format yyyymmdd_hhmm).dmp"
+$filename = "$($env:COMPUTERNAME)_$(get-date -Format yyyymmdd_hhmm).raw"
 
 # Set Working directory to C:\Windows\Temp
 Set-Location -Path C:\Windows\Temp
@@ -165,11 +165,11 @@ Invoke-WebRequest $downloadUri -OutFile winpmem.exe
 
 if ($SplitDump -eq $False) {
     Write-Status "Dumping memory..."
-    .\winpmem.exe -o "C:\Windows\Temp\$filename" -c zlib
+    .\winpmem.exe "C:\Windows\Temp\$filename"
 }
 else {
     Write-Status "Dumping memory in $SplitChunkSize byte chunks"
-    .\winpmem.exe -o "C:\Windows\Temp\$filename" --split $SplitChunkSize -c zlib
+    .\winpmem.exe "C:\Windows\Temp\$filename" --split $SplitChunkSize
 }
 
 # Install AzCopy into remote device
