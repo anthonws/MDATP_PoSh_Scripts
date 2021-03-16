@@ -39,6 +39,14 @@
 ## - New version of WinPMem (fixes VSM issues)
 ## - Changed code to get latest release from new GitHub repo and check for download_url instead of tag
 
+## !!! Instructions !!!! ###
+## https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview
+## Create a Blob storage
+## Create a Container
+## Create a SAS token with Blob + Container + Write rights only
+## Use the Blob sotrage name
+## Do NOT change the variables for Azure URI or params directly! The script will prompt you to add the needed info!
+
 # Custom format for logging messages
 function Write-Status($text) {
     write-host "[I] " -ForegroundColor Green -NoNewline
