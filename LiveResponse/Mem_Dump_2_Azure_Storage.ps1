@@ -32,7 +32,7 @@
 ## - Added Azure Storage required parameters
 ## - Added check for elevated rights.
 ##
-## 16/03/2021 - V7
+## 16/03/2021 - V8
 ## - Now for realz, fixing metered connection check.
 
 
