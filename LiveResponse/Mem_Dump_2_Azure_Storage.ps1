@@ -163,7 +163,7 @@ Invoke-WebRequest $downloadUri -OutFile winpmem.exe
 # Dump Device Memory
 # Please note that this will fail in virtual machines that use dynamic memory
 
-if ($SplitDump == False) {
+if ($SplitDump -eq $False) {
     Write-Status "Dumping memory..."
     .\winpmem.exe -o "C:\Windows\Temp\$filename" -c zlib
 }
