@@ -31,6 +31,9 @@
 ## - Fixed Metered Connection check.
 ## - Added Azure Storage required parameters
 ## - Added check for elevated rights.
+##
+## 16/03/2021 - V7
+## - Now for realz, fixing metered connection check.
 
 
 # Custom format for logging messages
@@ -124,18 +127,6 @@ if ((New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Pr
 Write-Status "Please input required Azure Storage information..."
 AzureInfo
 
-# Check if Connection is Metered
-Write-Status "Checking for Metered Connection..."
-[void][Windows.Networking.Connectivity.NetworkInformation, Windows, ContentType = WindowsRuntime]
-$connection = [Windows.Networking.Connectivity.NetworkInformation]::GetInternetConnectionProfile().GetConnectionCost()
-
-if ($Connection.ApproachingDataLimit -eq "True" -or $connection.OverDataLimit -eq "True" -or $connection.Roaming -eq "True" -or $connection.BackgroundDataUsageRestricted -eq "True" -or $connection.NetworkCostType -ne "Unrestricted") {
-    Write-Sub-Warning ("Connection is Metered. Dump will NOT be uploaded.")
-    }
-else {
-    Write-Sub-Status "Connection is not Metered. Dump will be uploaded to Azure."
-    }
-    
 # Check if required disk space is available
 Write-Status "Checking for Available Disk Space..."
 $Memsize=(Get-WmiObject win32_physicalmemory).capacity -as [long]
@@ -181,14 +172,20 @@ Expand-Archive ./AzCopy.zip ./AzCopy -Force
 # Set Working directory to C:\Windows\Temp\AzCopy dir
 Set-Location -Path C:\Windows\Temp\AzCopy\azcopy_windows_amd64*
 
+# Check if Connection is Metered
+Write-Status "Checking for Metered Connection..."
+[void][Windows.Networking.Connectivity.NetworkInformation, Windows, ContentType = WindowsRuntime]
+$connection = [Windows.Networking.Connectivity.NetworkInformation]::GetInternetConnectionProfile().GetConnectionCost()
+
 # Copy generated dump into Azure Storage using a limited SAS
-if ($isMetered -eq $False) {
-    Write-Sub-Status "Copying memory dump to your Azure Storage container " $AzContainerName
-    .\azcopy.exe copy "C:\Windows\Temp\$filename*" $AzureURI 2>&1 
-    }
-else {
+if ($Connection.ApproachingDataLimit -eq "True" -or $connection.OverDataLimit -eq "True" -or $connection.Roaming -eq "True" -or $connection.BackgroundDataUsageRestricted -eq "True" -or $connection.NetworkCostType -ne "Unrestricted") {
     Write-Status "Dump was successfully created but NOT uploaded. Metered connection detected."
     Write-Status "Dump is located at C:\Windows\Temp\$filename"
+    }
+else {
+    Write-Sub-Status "Connection is not Metered. Dump will be uploaded to Azure."
+    Write-Sub-Status "Copying memory dump to your Azure Storage container " $AzContainerName
+    .\azcopy.exe copy "C:\Windows\Temp\$filename*" $AzureURI 2>&1 
     }
     
 write-status "Execution Completed! Exiting."
