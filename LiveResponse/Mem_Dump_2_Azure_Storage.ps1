@@ -134,9 +134,9 @@ if ((New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Pr
     return
     }
 
-# Check if Azure URI required info is present
+# Get required Azure URI info
 Write-Status "Please input required Azure Storage information..."
-AzureInfo
+$AzureURI = AzureInfo
 
 # Check if required disk space is available
 Write-Status "Checking for Available Disk Space..."
