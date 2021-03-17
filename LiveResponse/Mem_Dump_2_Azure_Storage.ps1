@@ -196,7 +196,7 @@ if ($Connection.ApproachingDataLimit -eq "True" -or $connection.OverDataLimit -e
 else {
     Write-Sub-Status "Connection is not Metered. Dump will be uploaded to Azure."
     Write-Sub-Status "Copying memory dump to your Azure Storage container " $AzContainerName
-    .\azcopy.exe copy "C:\Windows\Temp\$filename*" $AzureURI 2>&1 
+    .\azcopy.exe copy "C:\Windows\Temp\$filename*" "$AzureURI" --check-length=false 2>&1 
     }
     
 write-status "Execution Completed! Exiting."
