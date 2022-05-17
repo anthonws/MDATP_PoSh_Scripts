@@ -1,4 +1,4 @@
-﻿$RulesIds = Get-MpPreference | Select-Object -ExpandProperty AttackSurfaceReductionRules_Ids
+$RulesIds = Get-MpPreference | Select-Object -ExpandProperty AttackSurfaceReductionRules_Ids
 $RulesActions = Get-MpPreference | Select-Object -ExpandProperty AttackSurfaceReductionRules_Actions
 $RulesExclusions = Get-MpPreference | Select-Object -ExpandProperty AttackSurfaceReductionOnlyExclusions
 
@@ -30,7 +30,7 @@ $counter = 0
 
 ForEach ($j in $RulesIds){
     ## Convert GUID into Rule Name
-    If ($RulesIdsArray[$counter] -eq "56a863a9-875e-4185-98a7-b882c64b5ce5"){$RuleName = "BBlock abuse of exploited vulnerable signed drivers"}
+        If ($RulesIdsArray[$counter] -eq "56a863a9-875e-4185-98a7-b882c64b5ce5"){$RuleName = "Block abuse of exploited vulnerable signed drivers"}
     ElseIf ($RulesIdsArray[$counter] -eq "7674ba52-37eb-4a4f-a9a1-f0f9a1619a2c"){$RuleName = "Block Adobe Reader from creating child processes"}
     ElseIf ($RulesIdsArray[$counter] -eq "D4F940AB-401B-4EFC-AADC-AD5F3C50688A"){$RuleName = "Block all Office applications from creating child processes"}
     ElseIf ($RulesIdsArray[$counter] -eq "9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2"){$RuleName = "Block credential stealing from the Windows local security authority subsystem (lsass.exe)"}
@@ -50,6 +50,7 @@ ForEach ($j in $RulesIds){
     If ($RulesActions[$counter] -eq 0){$RuleAction = "Disabled"}
     ElseIf ($RulesActions[$counter] -eq 1){$RuleAction = "Block"}
     ElseIf ($RulesActions[$counter] -eq 2){$RuleAction = "Audit"}
+    ElseIf ($RulesActions[$counter] -eq 6){$RuleAction = "Warn"}
     ## Output Rule Id, Name and Action
     Write-Host "=>" $RulesIdsArray[$counter] " **" $RuleName "**" "Action:"$RuleAction
     $counter++
