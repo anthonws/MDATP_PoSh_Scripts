@@ -14,6 +14,7 @@ ForEach ($i in $RulesActions){
     If ($RulesActions[$counter] -eq 0){$TotalNotConfigured++}
     ElseIf ($RulesActions[$counter] -eq 1){$TotalBlock++}
     ElseIf ($RulesActions[$counter] -eq 2){$TotalAudit++}
+    ElseIf ($RulesActions[$counter] -eq 6){$TotalWarn++}
     $counter++
 }
 
@@ -21,7 +22,7 @@ Write-Host
 Write-Host ====================================== ASR Summary ======================================
 
 Write-Host "=> There's"($RulesIds).Count"rules configured"
-Write-Host "=>"$TotalNotConfigured "in Disabled Mode **" $TotalAudit "in Audit Mode **" $TotalBlock "in Block Mode"
+Write-Host "=>"$TotalNotConfigured "in Disabled Mode **" $TotalAudit "in Audit Mode **" $TotalBlock "in Block Mode **" $TotalWarn "in Warn Mode"
 
 Write-Host 
 Write-Host ====================================== ASR Rules ======================================
