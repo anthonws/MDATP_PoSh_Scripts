@@ -9,6 +9,7 @@ $counter = 0
 $TotalNotConfigured = 0
 $TotalAudit = 0
 $TotalBlock = 0
+$TotalWarn = 0
 
 ForEach ($i in $RulesActions){
     If ($RulesActions[$counter] -eq 0){$TotalNotConfigured++}
