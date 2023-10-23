@@ -46,8 +46,10 @@ ForEach ($j in $RulesIds){
     ElseIf ($RulesIdsArray[$counter] -eq "e6db77e5-3df2-4cf1-b95a-636979351e5b"){$RuleName = "Block persistence through WMI event subscription"}
     ElseIf ($RulesIdsArray[$counter] -eq "d1e49aac-8f56-4280-b9ba-993a6d77406c"){$RuleName = "Block process creations originating from PSExec and WMI commands"}
     ElseIf ($RulesIdsArray[$counter] -eq "b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4"){$RuleName = "Block untrusted and unsigned processes that run from USB"}
+    ElseIf ($RulesIdsArray[$counter] -eq "a8f5898e-1dc8-49a9-9878-85004b8a61e6"){$RuleName = "Block Webshell creation for Servers"}
     ElseIf ($RulesIdsArray[$counter] -eq "92E97FA1-2EDF-4476-BDD6-9DD0B4DDDC7B"){$RuleName = "Block Win32 API calls from Office macro"}
     ElseIf ($RulesIdsArray[$counter] -eq "c1db55ab-c21a-4637-bb3f-a12568109d35"){$RuleName = "Use advanced protection against ransomware"}
+    Else   {$RuleName = "UNKNOWN ASR rule name"}
     ## Check the Action type
     If ($RulesActions[$counter] -eq 0){$RuleAction = "Disabled"}
     ElseIf ($RulesActions[$counter] -eq 1){$RuleAction = "Block"}
